@@ -1,0 +1,53 @@
+import random
+
+print("=== PIEDRA, PAPEL O TIJERAS ===")
+print("Desarrollado con Spyder - Lógica de Programación\n")
+
+# Declaración de variables 
+victorias = 0
+derrotas = 0
+empates = 0
+
+# Estructura repetitiva principal 
+while True:
+       
+    # Pregunta del diagrama: ¿Desea jugar?
+    respuesta = input("\n¿Desea jugar? (S/N): ").upper()
+    
+    if respuesta != "S":
+        break  # sale del juego
+    
+    # Pedir opción al usuario
+    while True:
+        print("\nElige tu jugada:")
+        print("1 = Piedra")
+        print("2 = Papel")
+        print("3 = Tijera")
+        opcion = int(input("Ingresa 1, 2 o 3: "))
+        
+        if opcion in [1, 2, 3]:
+            break
+        else:
+            print("❌ Opción inválida, intenta de nuevo")
+    
+    # Generar jugada de la computadora
+    pc = random.randint(1, 3)
+    print(f"La computadora eligió: {pc}")
+    
+    # Condicionales para decidir ganador
+    if opcion == pc:
+        print("¡EMPATE! 🤝")
+        empates += 1
+    elif (opcion == 1 and pc == 3) or (opcion == 2 and pc == 1) or (opcion == 3 and pc == 2):
+        print("¡GANASTE! 🎉")
+        victorias += 1
+    else:
+        print("¡PERDISTE! 😢")
+        derrotas += 1
+
+# Al terminar el juego (cuando dice N)
+print("\n=== ESTADÍSTICAS FINALES ===")
+print(f"Victorias: {victorias}")
+print(f"Derrotas: {derrotas}")
+print(f"Empates: {empates}")
+print("¡Gracias por jugar! 👋")
