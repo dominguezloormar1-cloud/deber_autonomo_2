@@ -1,53 +1,92 @@
 import random
 
-print("=== PIEDRA, PAPEL O TIJERAS ===")
-print("Desarrollado con Spyder - Lógica de Programación\n")
+# =============================================
+#     PIEDRA, PAPEL O TIJERAS
+#   Proyecto Final - Autónomo 3 - Lógica de Programación
+# =============================================
 
-# Declaración de variables 
+# Declaración y manejo de variables
 victorias = 0
 derrotas = 0
 empates = 0
 
-# Estructura repetitiva principal 
-while True:
-       
-    # Pregunta del diagrama: ¿Desea jugar?
-    respuesta = input("\n¿Desea jugar? (S/N): ").upper()
-    
-    if respuesta != "S":
-        break  # sale del juego
-    
-    # Pedir opción al usuario
+# Estructura de datos - Lista de Tuplas
+historial_partidas = []
+
+# FUNCIONES 
+def mostrar_menu_jugada():
+    """Función que muestra las opciones y valida la entrada del jugador"""
     while True:
         print("\nElige tu jugada:")
-        print("1 = Piedra")
-        print("2 = Papel")
-        print("3 = Tijera")
+        print("1 = Piedra 🪨")
+        print("2 = Papel 📄")
+        print("3 = Tijera ✂️")
+        
         opcion = int(input("Ingresa 1, 2 o 3: "))
         
         if opcion in [1, 2, 3]:
-            break
+            return opcion
         else:
-            print("❌ Opción inválida, intenta de nuevo")
+            print("❌ Opción inválida. Intenta de nuevo.")
+
+
+# PROGRAMA PRINCIPAL YA EN PROCESO
+print("=== PIEDRA, PAPEL O TIJERAS ===")
+print("Proyecto Final - Autónomo 3 - Lógica de Programación\n")
+
+while True:
+    respuesta = input("\n¿Desea jugar? (S/N): ").upper()
     
+    if respuesta != "S":
+        break
+   
+    # Llamada a la función
+    opcion_jugador = mostrar_menu_jugada()
+   
     # Generar jugada de la computadora
-    pc = random.randint(1, 3)
-    print(f"La computadora eligió: {pc}")
-    
-    # Condicionales para decidir ganador
-    if opcion == pc:
+    opcion_pc = random.randint(1, 3)
+    print(f"La computadora eligió: {opcion_pc}")
+   
+    # Lógica de ganador
+    if opcion_jugador == opcion_pc:
         print("¡EMPATE! 🤝")
+        resultado = "¡EMPATE! 🤝"
         empates += 1
-    elif (opcion == 1 and pc == 3) or (opcion == 2 and pc == 1) or (opcion == 3 and pc == 2):
+    elif (opcion_jugador == 1 and opcion_pc == 3) or \
+         (opcion_jugador == 2 and opcion_pc == 1) or \
+         (opcion_jugador == 3 and opcion_pc == 2):
         print("¡GANASTE! 🎉")
+        resultado = "¡GANASTE! 🎉"
         victorias += 1
     else:
         print("¡PERDISTE! 😢")
+        resultado = "¡PERDISTE! 😢"
         derrotas += 1
+   
+    # Guardar en estructura de datos (Lista de Tuplas)
+    historial_partidas.append((opcion_jugador, opcion_pc, resultado))
 
-# Al terminar el juego (cuando dice N)
+# ====================== FIN DEL JUEGO ======================
 print("\n=== ESTADÍSTICAS FINALES ===")
-print(f"Victorias: {victorias}")
-print(f"Derrotas: {derrotas}")
-print(f"Empates: {empates}")
-print("¡Gracias por jugar! 👋")
+print(f"Victorias:  {victorias}")
+print(f"Derrotas:   {derrotas}")
+print(f"Empates:    {empates}")
+print(f"Total partidas: {victorias + derrotas + empates}")
+
+# Mostrar el historial
+if len(historial_partidas) > 0:
+    print("\n=== HISTORIAL DE PARTIDAS ===")
+    print("-" * 60)
+    
+    jugadas_texto = {1: "Piedra", 2: "Papel", 3: "Tijera"}
+    
+    for i in range(len(historial_partidas)):
+        jugada, pc, resultado = historial_partidas[i]
+        print(f"Partida {i+1}: Tú → {jugadas_texto[jugada]} | "
+              f"PC → {jugadas_texto[pc]} | {resultado}")
+    
+    print("-" * 60)
+else:
+    print("\nNo se jugaron partidas.")
+
+print("\n¡Gracias por ser parte de este juego, regresa pronto 👋")
